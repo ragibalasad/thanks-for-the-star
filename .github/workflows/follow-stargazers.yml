@@ -1,0 +1,29 @@
+name: Auto-follow stargazers
+
+on:
+  schedule:
+    - cron: "0 * * * *" # runs every hour
+  workflow_dispatch: # allows manual trigger
+
+jobs:
+  follow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: 📦 Install dependencies
+        run: pip install requests
+
+      - name: 🧠 Run follow script
+        run: python follow_stargazers.py
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+          REPO_OWNER: your-username-or-org
+          REPO_NAME: your-repo-name
