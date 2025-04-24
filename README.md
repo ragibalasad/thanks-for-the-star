@@ -1,8 +1,8 @@
-<p align="center"><img src="https://gist.githubusercontent.com/ragibalasad/0005e389abeceb2f21f397f7db21863c/raw/5ae017fa7f2f0513bbf13a69603709dd859e8f39/thanks_for_the_star.svg"></p>
+<p align="center"><img src="https://gist.githubusercontent.com/ragibalasad/0005e389abeceb2f21f397f7db21863c/raw/275411a57f60380762891a8f74a737dac1ef755f/thanks_for_the_star.svg"></p>
 
 <h1 align="center">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/ragibalasad/thanks-for-the-star?style=for-the-badge&label=%E2%AD%90%20stars&labelColor=24292F&color=FFE66D">
-  <img src="https://img.shields.io/github/license/ragibalasad/thanks-for-the-star?style=for-the-badge&label=%F0%9F%93%84%20License&labelColor=24292F&color=7ED6DF" />
+  <img src="https://img.shields.io/github/license/ragibalasad/thanks-for-the-star?style=for-the-badge&label=%F0%9F%93%84%20LICENSE&labelColor=24292F&color=7ED6DF" />
 </h1>
 
 <p align="center">
