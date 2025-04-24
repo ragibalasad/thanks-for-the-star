@@ -2,12 +2,17 @@
 
 <h1 align="center">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/ragibalasad/thanks-for-the-star?style=for-the-badge&label=%E2%AD%90%20stars&labelColor=24292F&color=FFE66D">
-  <img src="https://img.shields.io/github/license/ragibalasad/thanks-for-the-star?style=for-the-badge" />
+  <img src="https://img.shields.io/github/license/ragibalasad/thanks-for-the-star?style=for-the-badge&label=%F0%9F%93%84%20License&labelColor=24292F&color=7ED6DF" />
 </h1>
 
 <p align="center">
   Automatically follow people who star your repo ✨<br/>
-  Give back with a follow, powered by GitHub Actions + Python<br/>
-  <strong>Star this repo and get an instant follow back 💖</strong>
+  Give back with a follow, powered by GitHub Actions + Python<br/><br/>
+
+  <div align=center>
+    
+  ##### Star this repo and get an instant follow back 💖
+  
+  </div>
 </p>
 
