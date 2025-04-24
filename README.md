@@ -10,9 +10,8 @@
   Give back with a follow, powered by GitHub Actions + Python<br/><br/>
 
   <div align=center>
-    
-  ##### Star this repo and get an instant follow back 💖
+
+##### Star this repo and get an instant follow back 💖
   
   </div>
 </p>
-
