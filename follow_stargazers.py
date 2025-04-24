@@ -1,4 +1,7 @@
 import requests, time, os
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
 
 TOKEN = os.environ["GH_TOKEN"]
 GIST_ID = os.environ["GIST_ID"]
