@@ -21,11 +21,11 @@ def get_followed_users_from_gist():
     return set(line.strip() for line in content.splitlines() if line.strip())
 
 
-def update_gist_with_user(username):
+def update_gist_with_usernames(followed_users):
     url = f"https://api.github.com/gists/{GIST_ID}"
-    followed = get_followed_users_from_gist()
-    followed.add(username)
-    data = {"files": {FILENAME: {"content": "\n".join(sorted(followed))}}}
+    existing_users = get_followed_users_from_gist()
+    updated_users = existing_users.union(followed_users)
+    data = {"files": {FILENAME: {"content": "\n".join(sorted(updated_users))}}}
     response = requests.patch(url, json=data, headers=headers)
     if response.status_code != 200:
         print(f"⚠️ Failed to update gist: {response.status_code} - {response.text}")
@@ -33,6 +33,7 @@ def update_gist_with_user(username):
 
 def get_stargazers(owner, repo):
     users, page = [], 1
+    print("Fetching stargazers...", end="\r")
     while True:
         url = f"https://api.github.com/repos/{owner}/{repo}/stargazers?per_page=100&page={page}"
         response = requests.get(url, headers=headers)
@@ -53,18 +54,31 @@ def follow_user(username):
     r = requests.put(url, headers=headers)
     if r.status_code == 204:
         print(f"✅ Followed {username}")
-        update_gist_with_user(username)
+        return True
     else:
         print(f"⚠️ Failed to follow {username}: {r.status_code} - {r.text}")
+        return False
 
 
 def main():
     already_followed = get_followed_users_from_gist()
     stargazers = get_stargazers(OWNER, REPO)
     new_users = [u for u in stargazers if u not in already_followed]
+
+    newly_followed = set()
+
     for u in new_users:
-        follow_user(u)
+        success = follow_user(u)
+        if success:
+            newly_followed.add(u)
         time.sleep(0.5)
+
+    if newly_followed:
+        print("Updating gist...", end="\r")
+        update_gist_with_usernames(newly_followed)
+        time.sleep(0.5)
+
+    print("Fetching stargazers...", end="\r")
 
 
 if __name__ == "__main__":
