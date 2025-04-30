@@ -1,5 +1,6 @@
 import requests, time, os
 from dotenv import load_dotenv
+import datetime
 
 load_dotenv(override=True)
 
@@ -33,7 +34,7 @@ def update_gist_with_usernames(followed_users):
 
 def get_stargazers(owner, repo):
     users, page = [], 1
-    print("Fetching stargazers...", end="\r")
+    # print("Fetching stargazers...", end="\r")
     while True:
         url = f"https://api.github.com/repos/{owner}/{repo}/stargazers?per_page=100&page={page}"
         response = requests.get(url, headers=headers)
@@ -50,13 +51,16 @@ def get_stargazers(owner, repo):
 
 
 def follow_user(username):
+    datetime_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     url = f"https://api.github.com/user/following/{username}"
     r = requests.put(url, headers=headers)
     if r.status_code == 204:
-        print(f"✅ Followed {username}")
+        print(f"[{datetime_str}] ✅ Followed {username}")
         return True
     else:
-        print(f"⚠️ Failed to follow {username}: {r.status_code} - {r.text}")
+        print(
+            f"[{datetime_str}] ⚠️ Failed to follow {username}: {r.status_code} - {r.text}"
+        )
         return False
 
 

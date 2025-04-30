@@ -12,4 +12,4 @@ if __name__ == "__main__":
             main()
         except Exception as e:
             print(f"An error occurred: {e}")
-        time.sleep(2)  # Wait for 10 seconds before running again
+        time.sleep(2)
