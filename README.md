@@ -20,6 +20,15 @@
 
 A Next.js 14 serverless GitHub webhook API to auto-follow users who star your repo — ported from the Python version to Next.js API route with full secret verification, gist tracking, and logging.
 
+## How it works
+
+When someone stars this repo, GitHub sends a webhook that triggers this API. It:
+
+- Validates the webhook signature
+- Checks if the user was already followed (via gist containing usernames of already followed users)
+- Follows the user if new by sending a PUT request to `https://api.github.com/user/following/{username}` with the GitHub token in the `Authorization` header (`Bearer <token>`).
+- Updates the gist to track followed users
+
 ## Features
 
 - Secure webhook secret validation
@@ -29,6 +38,7 @@ A Next.js 14 serverless GitHub webhook API to auto-follow users who star your re
 - Logs for success and errors
 
 ## Setup
+You can set this up or yourself to automatically follow users who star your repository.
 
 1. Clone or download this repo
 
@@ -53,15 +63,6 @@ https://your-vercel-app.vercel.app/api/webhook
 
 - Content type: `application/json`
 - Secret: same as `GITHUB_WEBHOOK_SECRET`
-
-## Usage
-
-When someone stars your repo, GitHub sends a webhook that triggers this API. It:
-
-- Validates the webhook signature
-- Checks if the user was already followed (via gist)
-- Follows the user if new
-- Updates the gist to track followed users
 
 ## Logs & Debugging
 
