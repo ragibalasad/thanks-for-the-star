@@ -21,7 +21,7 @@ jobs:
         run: pip install requests dotenv
 
       - name: 🧠 Run follow script
-        run: python follow_stargazers.py
+        run: python legacy-python/follow_stargazers.py
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
