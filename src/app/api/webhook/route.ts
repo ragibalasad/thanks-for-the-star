@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifySignature } from '@/lib/verifySignature'
-import { followUser } from '@/lib/followUser'
-import { updateGistWithUsername } from '@/lib/updateGist'
+import { followUser, unfollowUser } from '@/lib/followUser'
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
@@ -13,31 +12,33 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'Invalid signature' }, { status: 401 })
   }
 
-  const event = JSON.parse(body)
+  const githubEvent = req.headers.get('x-github-event')
+  if (githubEvent !== 'star') {
+    console.log('Not a star event')
+    return NextResponse.json({ message: 'Ignored non-star event' })
+  }
 
-  if (event.action !== 'created' || event.repository?.stargazers_count === undefined) {
-    console.log('Not a new star event')
+  const event = JSON.parse(body)
+  const username = event.sender?.login
+
+  if (!['created', 'deleted'].includes(event.action) || !username) {
+    console.warn('Irrelevant action or missing username')
     return NextResponse.json({ message: 'Ignored' })
   }
 
-  const username = event.sender?.login
-  if (!username) {
-    console.warn('No username found in event')
-    return NextResponse.json({ message: 'No username found' }, { status: 400 })
-  }
-
   try {
-    const updated = await updateGistWithUsername(username)
-
-    if (!updated) {
-      console.log(`Already followed: ${username}`)
-      return NextResponse.json({ message: 'Already followed' })
+    console.log(`Received event: ${event.action} from ${username}`)
+    
+    if (event.action === 'created') {
+      await followUser(username)
+      console.log(`Followed user: ${username}`) 
+    } else if (event.action === 'deleted') {
+      await unfollowUser(username)
+      console.log(`Unfollowed user: ${username}`) 
     }
 
-    await followUser(username)
-    console.log(`Followed new user: ${username}`)
+    return NextResponse.json({ message: 'Success' })
 
-    return NextResponse.json({ message: `Followed ${username}` })
   } catch (err: any) {
     console.error('Error:', err.message || err)
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })
