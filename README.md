@@ -39,7 +39,7 @@ When someone stars this repo, GitHub sends a webhook that triggers this API. It:
 
 ## Setup
 
-You can set this up or yourself to automatically follow users who star your repository.
+You can set this up yourself to automatically follow users who star your repository.
 
 1. Clone or download this repo
 
